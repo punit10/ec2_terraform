@@ -1,5 +1,10 @@
 # Local .terraform directories
 .terraform/
+*.tfvars
+*.idea
+.terraform.lock.hcl
+*.pem
+
 
 # .tfstate files
 *.tfstate
