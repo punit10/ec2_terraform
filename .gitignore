@@ -4,7 +4,7 @@
 *.idea
 .terraform.lock.hcl
 *.pem
-
+*.tfplan
 
 # .tfstate files
 *.tfstate
