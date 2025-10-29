@@ -47,6 +47,12 @@ variable "os_to_deploy" {
   }
 }
 
+variable "keypair" {
+  type        = string
+  description = "Key pair of ec2"
+  default     = "Linux2key"
+}
+
 
 locals {
   OS_user = var.os_to_deploy == "ubuntu" ? "ubuntu" : "ec2-user"

@@ -49,29 +49,29 @@ resource "aws_security_group" "nginx_sg" {
 }
 
 # INSTANCES #
-resource "aws_instance" "nginx1" {
-  ami                         = var.os_to_deploy == "ubuntu" ? var.ubuntu_ami : nonsensitive(data.aws_ssm_parameter.amzn2_linux.value)
-  instance_type               = "t2.micro"
-  subnet_id                   = var.aws_public_subnet_id
-  vpc_security_group_ids      = [aws_security_group.nginx_sg.id]
-  key_name                    = "LinuxKP"
-  associate_public_ip_address = true
+# resource "aws_instance" "nginx1" {
+#   ami                         = var.os_to_deploy == "ubuntu" ? var.ubuntu_ami : nonsensitive(data.aws_ssm_parameter.amzn2_linux.value)
+#   instance_type               = "t2.micro"
+#   subnet_id                   = var.aws_public_subnet_id
+#   vpc_security_group_ids      = [aws_security_group.nginx_sg.id]
+#   key_name                    = var.keypair
+#   associate_public_ip_address = true
 
-  provisioner "file" {
-    source      = local.install_jenkins
-    destination = "/home/${local.OS_user}/${local.install_jenkins}"
+#   provisioner "file" {
+#     source      = local.install_jenkins
+#     destination = "/home/${local.OS_user}/${local.install_jenkins}"
 
-    connection {
-      type        = "ssh"
-      user        = local.OS_user
-      private_key = file("${path.module}/LinuxKP.pem")
-      host        = self.public_ip
-    }
-  }
-  tags = {
-    Name = "Jenkins server"
-  }
-}
+#     connection {
+#       type        = "ssh"
+#       user        = local.OS_user
+#       private_key = file("${path.module}/${var.keypair}.pem")
+#       host        = self.public_ip
+#     }
+#   }
+#   tags = {
+#     Name = "Jenkins server"
+#   }
+# }
 
 # INSTANCES #
 resource "aws_instance" "docker_instance" {
@@ -79,11 +79,11 @@ resource "aws_instance" "docker_instance" {
   instance_type               = "t2.micro"
   subnet_id                   = var.aws_public_subnet_id
   vpc_security_group_ids      = [aws_security_group.nginx_sg.id]
-  key_name                    = "LinuxKP"
+  key_name                    = var.keypair
   associate_public_ip_address = true
 
   tags = {
-    Name = "docker server"
+    Name = "Docker Server"
   }
 }
 

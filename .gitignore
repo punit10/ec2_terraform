@@ -5,6 +5,7 @@
 .terraform.lock.hcl
 *.pem
 *.tfplan
+terraform.exe
 
 # .tfstate files
 *.tfstate
